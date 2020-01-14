@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const url = `mongodb://localhost:27017/amin`;
 
 const { Schema } = mongoose;
 
@@ -30,15 +29,9 @@ const insertUser = (data, cb) => {
 
 }
 
-
-
 const findUser = (name, email, cb) => {
     User.findOne({ name: name, email: email }, cb);
 };
-
-
-
-
 
 exports.User = User;
 exports.insertUser = insertUser;
