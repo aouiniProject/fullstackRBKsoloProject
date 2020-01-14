@@ -21,7 +21,7 @@ const insertUser = (data, cb) => {
 
     // bcrypt.genSalt(10, function (err, salt) {
     //     bcrypt.hash(data.password, salt, function (err, hash) {
-    //         data.password = hash;
+
     //     });
     var user = new User(data)
 

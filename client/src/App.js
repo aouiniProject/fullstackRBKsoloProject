@@ -1,13 +1,16 @@
 import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-import SignUp from './components/auth/signup.js'
+import { Col, Row, Container } from 'react-bootstrap';
+import SignUp from './components/auth/signup.js';
+import SignIn from './components/auth/signin'
 
 function App() {
   return (
-    <div className="App">
-      {/* <SignUp></SignUp> */}
-    </div>
+    <Container>
+      <Row>
+        <Col><SignUp></SignUp></Col>
+        <Col><SignIn></SignIn></Col>
+      </Row>
+    </Container>
   );
 }
 

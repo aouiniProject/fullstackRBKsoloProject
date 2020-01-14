@@ -40,10 +40,12 @@ export default class SignUp extends React.Component {
             <div className="col-dt-6">
                 <h1><b>Sign Up</b></h1>
                 <p><b>It’s quick and easy.</b></p>
-                <form onSubmit={this.handleSubmit}>
+                <br></br>
+                <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="name">
 
                         <Form.Control
+                            size="lg"
                             name="name"
                             value={this.state.value}
                             onChange={this.handleChange}
@@ -53,8 +55,10 @@ export default class SignUp extends React.Component {
                         />
 
                     </Form.Group>
+                    <br ></br>
                     <Form.Group className="email">
                         <Form.Control
+                            size="lg"
                             name="email"
                             value={this.state.value}
                             onChange={this.handleChange}
@@ -65,8 +69,10 @@ export default class SignUp extends React.Component {
                         <Form.Text className="text-muted">
                             We'll never share your email with anyone else.</Form.Text>
                     </Form.Group>
+
                     <Form.Group className="password">
                         <Form.Control
+                            size="lg"
                             name="password"
                             value={this.state.value}
                             onChange={this.handleChange}
@@ -76,7 +82,7 @@ export default class SignUp extends React.Component {
                         />
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>
-                </form>
+                </Form>
             </div>
         )
     }
