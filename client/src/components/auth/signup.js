@@ -29,7 +29,7 @@ export default class SignUp extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        axios.post("/api/users", this.state)
+        axios.post("/api/usersUp", this.state)
             .then(res => res)
             .catch(err => console.log('nope', err));
 
@@ -81,7 +81,7 @@ export default class SignUp extends React.Component {
                             required
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">Submit</Button>
+                    <Button variant="primary" type="submit">Register</Button>
                 </Form>
             </div>
         )

@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-
+import auth from './src.auth';
+import { BrowserRouter as Route, Redirect, useHistory } from 'react-router-dom';
 
 export default class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            redirect: false
+
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -22,19 +25,38 @@ export default class SignIn extends Component {
 
         });
 
+
+    }
+
+    login() {
+        this.setState({ redirect: true });
     }
 
     handleSubmit(event) {
         event.preventDefault();
+        // console.log(this.state);
 
-        axios.get("/api/users", this.state)
-            .then(res => res)
+        axios.post("/api/usersIn", this.state)
+            .then((res) => {
+                if (res.data) {
+                    this.login()
+                }
+            })
             .catch(err => console.log('nope', err));
+
 
     }
 
     render() {
+        const { redirect } = this.state;
+
+        if (redirect) {
+            return (
+                <Redirect to='/home' />
+            )
+        }
         return (
+
             <div className="col-dt-6">
                 <h1><b>SignIn</b></h1>
                 <p><b>you'll be able to chat without any one spyin on you</b></p>
@@ -63,7 +85,7 @@ export default class SignIn extends Component {
                             required
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">Submit</Button>
+                    <Button variant="primary" type="submit">Login</Button>
 
                 </Form>
             </div>

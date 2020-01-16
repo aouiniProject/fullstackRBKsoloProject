@@ -1,14 +1,15 @@
-const userAPI = require('../database/user')
+const userAPI = require('../database/user');
 
 module.exports = (app) => {
-    app.post(`/api/users`, (req, res, next) => {
-        console.log(req.body);
+    app.post(`/api/usersUp`, (req, res, next) => {
+
         userAPI.insertUser(req.body)
     })
 
-    app.get(`/api/users`, (req, res, next) => {
-        console.log(req.body);
-        userAPI.findUser(req.body.name, req.body.email, () => console.log("logged in !!!"))
+    app.post(`/api/usersIn`, (req, res, next) => {
+        userAPI.findUser(req.body, res);
+
     })
+
 
 }

@@ -1,37 +1,49 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
 import SignUp from './components/auth/signup.js';
 import SignIn from './components/auth/signin'
-import Home from './components/team/home';
-import Announce from './components/team/announcements';
+import Home from './components/afterLogIn/home';
+import Announce from './components/afterLogIn/announcements';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
+import Auth from './components/auth/src.auth'
 
-function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/home">
-          <Home />
-        </Route>
-        <Route path="//" >
-          <Container>
-            <Row>
-              <Col><SignUp></SignUp></Col>
-              <Col><SignIn></SignIn></Col>
-            </Row>
-          </Container>
+class App extends Component {
 
-        </Route>
+  render() {
 
-      </Switch>
-    </Router>
 
-  );
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/" >
+            <Container>
+              <Row>
+                <Col><SignUp></SignUp></Col>
+                <Col><SignIn ></SignIn></Col>
+              </Row>
+            </Container>
+
+          </Route>
+          <Route exact path="/home" >
+            <Home />
+
+          </Route>
+          <Route path="*">
+            <h1>404 PATH NOT FOUND</h1>
+          </Route>
+
+        </Switch>
+      </Router >
+
+    )
+  }
+
 }
 
 export default App;

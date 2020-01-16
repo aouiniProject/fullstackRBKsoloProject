@@ -40,14 +40,12 @@ export default class Announce extends Component {
             .then((res) => {
 
                 this.setState({ messages: res.data });
-                console.log(this.state.messages)
             })
             .catch((error) => {
                 // handle error
                 console.log(error);
             })
     }
-
 
     render() {
         const pStyle = {
@@ -56,6 +54,16 @@ export default class Announce extends Component {
         }
         return (
             <div className="announcement">
+                <div className="chats">
+                    {this.state.messages.map(msg => {
+                        return (
+                            <div id={msg._id}>
+                                <p style={pStyle}>{msg.message}</p>
+                                <hr></hr>
+                            </div>
+                        )
+                    })}
+                </div>
                 <Form onSubmit={this.handleSubmit}>
                     <Row>
                         <Col sm="11">
@@ -78,16 +86,6 @@ export default class Announce extends Component {
                         </Col>
                     </Row>
                 </Form>
-                <div className="chats">
-                    {this.state.messages.map(msg => {
-                        return (
-                            <div className="messages">
-                                <p style={pStyle}>{msg.message}</p>
-                                <hr></hr>
-                            </div>
-                        )
-                    })}
-                </div>
             </div>
         )
     }
