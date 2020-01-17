@@ -16,4 +16,11 @@ module.exports = (app) => {
             }
         })
     })
+
+    app.delete('/api/announce/:msgId', (req, res) => {
+        const id = req.params.msgId
+        console.log(id);
+
+
+    })
 }

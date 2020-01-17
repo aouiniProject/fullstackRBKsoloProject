@@ -13,6 +13,10 @@ const insertMessage = (data, cb) => {
         .catch(err => console.log("this is a nono: " + err))
 }
 
-exports.insertMessage = insertMessage;
+const deleteData = (data, cb) => {
+    Message.remove({ _id: data })
+}
 
+exports.insertMessage = insertMessage;
+exports.deleteData = deleteData;
 exports.Message = Message;

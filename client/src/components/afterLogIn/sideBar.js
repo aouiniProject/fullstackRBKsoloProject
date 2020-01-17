@@ -12,14 +12,14 @@ export default class SideBar extends Component {
         return (
             <div>
                 <Navbar>
-                    <Navbar.Brand href="/">RBK Work Space</Navbar.Brand>
+                    <Navbar.Brand href="/home">RBK Work Space</Navbar.Brand>
                     <Navbar.Collapse id="basic-navbar-nav" >
                         <Nav className="mr-auto">
-                            <Nav.Link>Sign Out</Nav.Link>
+                            <Nav.Link href="/">Sign Out</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
-            </div>
+            </div >
         )
     }
-} 
+}

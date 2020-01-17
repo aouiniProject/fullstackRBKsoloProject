@@ -14,6 +14,7 @@ export default class Announce extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
 
     }
 
@@ -23,6 +24,13 @@ export default class Announce extends Component {
             [event.target.name]: event.target.value
 
         });
+
+    }
+
+    handleDelete(event) {
+        event.preventDefault();
+        console.log(event.target.name);
+        axios.delete(`/api/announce/${event.target.name}`)
 
     }
 
@@ -38,8 +46,15 @@ export default class Announce extends Component {
     componentDidMount() {
         axios.get('/api/announce')
             .then((res) => {
+                console.log(res.data)
+                let Mesgs = [];
+                for (let i = res.data.length - 8; i < res.data.length; i++) {
 
-                this.setState({ messages: res.data });
+                    Mesgs.push(res.data[i])
+                }
+                console.log(Mesgs)
+                this.setState({ messages: Mesgs });
+
             })
             .catch((error) => {
                 // handle error
@@ -49,43 +64,57 @@ export default class Announce extends Component {
 
     render() {
         const pStyle = {
-            margin: "20px",
+
             "font-size": "25px"
         }
+
         return (
             <div className="announcement">
                 <div className="chats">
                     {this.state.messages.map(msg => {
                         return (
-                            <div id={msg._id}>
-                                <p style={pStyle}>{msg.message}</p>
+                            <div id={msg._id} className="messages">
+                                <Row>
+                                    <Col sm={11}>
+                                        <p style={pStyle}>{msg.message}</p>
+                                    </Col>
+                                    <Col sm={1}>
+                                        <Button name={msg._id} onClick={this.handleDelete} variant="outline-danger">Delete</Button>
+                                        {'\n'}
+                                        <Button variant="outline-info">Update</Button>
+                                    </Col>
+                                </Row>
+
                                 <hr></hr>
                             </div>
                         )
                     })}
                 </div>
-                <Form onSubmit={this.handleSubmit}>
-                    <Row>
-                        <Col sm="11">
-                            <Form.Group controlId="message">
+                <div id='input'>
+                    <Form onSubmit={this.handleSubmit}>
+                        <Row>
+                            <Col sm="11">
+                                <Form.Group controlId="message">
 
-                                <Form.Control
-                                    size="lg"
-                                    name="message"
-                                    value={this.state.value}
-                                    onChange={this.handleChange}
-                                    type="text"
-                                    placeholder="Message @annoncement"
-                                    required
-                                />
+                                    <Form.Control
+                                        size="lg"
+                                        name="message"
+                                        value={this.state.value}
+                                        onChange={this.handleChange}
+                                        type="text"
+                                        placeholder="Message @annoncement"
+                                        required
+                                    />
 
-                            </Form.Group>
-                        </Col>
-                        <Col sm="1">
-                            <Button size="lg" variant="primary" type="submit">Send</Button>
-                        </Col>
-                    </Row>
-                </Form>
+                                </Form.Group>
+                            </Col>
+                            <Col sm="1">
+                                <Button size="lg" variant="primary" type="submit">Send</Button>
+                            </Col>
+                        </Row>
+                    </Form>
+
+                </div>
             </div>
         )
     }

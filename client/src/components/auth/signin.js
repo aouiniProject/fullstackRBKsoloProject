@@ -59,7 +59,6 @@ export default class SignIn extends Component {
 
             <div className="col-dt-6">
                 <h1><b>SignIn</b></h1>
-                <p><b>you'll be able to chat without any one spyin on you</b></p>
                 <br></br>
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group className="email">
