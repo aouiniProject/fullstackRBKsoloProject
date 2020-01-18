@@ -42,7 +42,7 @@ const findUser = (input, res) => {
         }
         if (user.email === input.email && user.password === input.password) {
 
-            res.status(200).send(true)
+            res.status(200).send(user.name)
         }
 
     });

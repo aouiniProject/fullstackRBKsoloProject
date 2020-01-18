@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import auth from './src.auth';
+
 import { BrowserRouter as Route, Redirect, useHistory } from 'react-router-dom';
 
 export default class SignIn extends Component {
@@ -29,7 +29,8 @@ export default class SignIn extends Component {
     }
 
     login() {
-        this.setState({ redirect: true });
+        this.setState({ redirect: true })
+
     }
 
     handleSubmit(event) {
@@ -39,8 +40,11 @@ export default class SignIn extends Component {
         axios.post("/api/usersIn", this.state)
             .then((res) => {
                 if (res.data) {
+                    console.log(res.data)
+                    localStorage.setItem('name', res.data)
                     this.login()
                 }
+                console.log(res)
             })
             .catch(err => console.log('nope', err));
 

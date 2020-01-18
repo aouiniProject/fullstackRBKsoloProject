@@ -11,7 +11,7 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-import Auth from './components/auth/src.auth'
+
 
 class App extends Component {
 
@@ -22,12 +22,12 @@ class App extends Component {
       <Router>
         <Switch>
           <Route exact path="/" >
-            <Container>
+            {localStorage.getItem('name') ? <Redirect to='/home' /> : (<Container>
               <Row>
                 <Col><SignUp></SignUp></Col>
                 <Col><SignIn ></SignIn></Col>
               </Row>
-            </Container>
+            </Container>)}
 
           </Route>
           <Route exact path="/home" >

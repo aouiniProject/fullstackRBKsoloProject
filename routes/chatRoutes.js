@@ -2,7 +2,7 @@ const mesAPI = require('./../database/chat');
 
 module.exports = (app) => {
     app.post('/api/announce', (req, res, next) => {
-        console.log(req.body)
+
         mesAPI.insertMessage(req.body, () => console.log('message inserted'))
     });
 
@@ -17,10 +17,11 @@ module.exports = (app) => {
         })
     })
 
-    app.delete('/api/announce/:msgId', (req, res) => {
-        const id = req.params.msgId
-        console.log(id);
-
+    app.delete('/api/delete/:id', (req, res) => {
+        const id = req.params.id
+        console.log("=>", id)
+        mesAPI.deleteData({ _id: id }, () => console.log('we made it'))
 
     })
+
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Announce from './announcements';
 import SideBar from '../afterLogIn/sideBar'
-import Auth from '../auth/src.auth';
+
 
 class Home extends Component {
     constructor(props) {
@@ -10,10 +10,9 @@ class Home extends Component {
 
     }
     render() {
+        if (localStorage.getItem('name')) {
 
-        return (
-
-            <Row>
+            return (<Row>
                 <Col sm={2}>
                     <SideBar></SideBar>
 
@@ -22,7 +21,11 @@ class Home extends Component {
                     <Announce></Announce>
                 </Col>
 
-            </Row>
+            </Row>)
+        }
+
+        return (
+            <h1>Your not supposed to be hear</h1>
 
         );
     }

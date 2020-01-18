@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const MessageSchema = Schema({
+    name: { type: String, required: true },
     message: { type: String, required: true }
 })
 
@@ -14,8 +15,11 @@ const insertMessage = (data, cb) => {
 }
 
 const deleteData = (data, cb) => {
-    Message.remove({ _id: data })
+
+    Message.findOneAndDelete(data).catch(err => console.log('nopee'))
+    cb()
 }
+
 
 exports.insertMessage = insertMessage;
 exports.deleteData = deleteData;

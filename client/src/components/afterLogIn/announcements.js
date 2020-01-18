@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form } from 'react-bootstrap';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Form, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 
 export default class Announce extends Component {
@@ -18,6 +17,7 @@ export default class Announce extends Component {
 
     }
 
+
     handleChange(event) {
         event.preventDefault();
         this.setState({
@@ -29,16 +29,20 @@ export default class Announce extends Component {
 
     handleDelete(event) {
         event.preventDefault();
-        console.log(event.target.name);
-        axios.delete(`/api/announce/${event.target.name}`)
+        console.log(event.target);
+
+        axios.delete(`http://localhost:9696/api/delete/${event.target.name}`)
+            .then(() => console.log('deleted'))
+            .catch((err) => console.log(err))
 
     }
 
     handleSubmit(event) {
         event.preventDefault();
 
-        axios.post('/api/announce', this.state)
+        axios.post('/api/announce', { name: localStorage.getItem('name'), message: this.state.message })
             .then(res => res)
+            // .then(()=> {})
             .catch(err => console.log('Error: ', err))
 
     }
@@ -46,16 +50,16 @@ export default class Announce extends Component {
     componentDidMount() {
         axios.get('/api/announce')
             .then((res) => {
-                console.log(res.data)
                 let Mesgs = [];
-                for (let i = res.data.length - 8; i < res.data.length; i++) {
+                for (let i = res.data.length - 1; i >= 0; i--) {
 
                     Mesgs.push(res.data[i])
                 }
-                console.log(Mesgs)
+
                 this.setState({ messages: Mesgs });
 
             })
+            .then(() => console.log(this.state.messages))
             .catch((error) => {
                 // handle error
                 console.log(error);
@@ -65,36 +69,20 @@ export default class Announce extends Component {
     render() {
         const pStyle = {
 
-            "font-size": "25px"
+            "fontSize": "25px"
+        }
+
+        const inStyle = {
+            "margin-top": "10px"
         }
 
         return (
             <div className="announcement">
-                <div className="chats">
-                    {this.state.messages.map(msg => {
-                        return (
-                            <div id={msg._id} className="messages">
-                                <Row>
-                                    <Col sm={11}>
-                                        <p style={pStyle}>{msg.message}</p>
-                                    </Col>
-                                    <Col sm={1}>
-                                        <Button name={msg._id} onClick={this.handleDelete} variant="outline-danger">Delete</Button>
-                                        {'\n'}
-                                        <Button variant="outline-info">Update</Button>
-                                    </Col>
-                                </Row>
-
-                                <hr></hr>
-                            </div>
-                        )
-                    })}
-                </div>
-                <div id='input'>
+                <div style={inStyle} id='input' >
                     <Form onSubmit={this.handleSubmit}>
                         <Row>
                             <Col sm="11">
-                                <Form.Group controlId="message">
+                                <Form.Group controlId="message" >
 
                                     <Form.Control
                                         size="lg"
@@ -115,6 +103,30 @@ export default class Announce extends Component {
                     </Form>
 
                 </div>
+                <div className="chats">
+                    {this.state.messages.map(msg => {
+
+                        return (
+                            <div className="messages">
+                                <hr></hr>
+                                <Row>
+                                    <Col sm={11}>
+                                        <p><b>{msg.name}</b></p>
+                                        <p style={pStyle}>{msg.message}</p>
+                                    </Col>
+                                    <Col sm={1}>
+
+                                        <Button name={msg._id} value="delete" onClick={this.handleDelete} variant="outline-danger">Delete</Button>
+
+                                    </Col>
+                                </Row>
+
+                            </div>
+                        )
+                    })}
+                </div>
+
+
             </div>
         )
     }
