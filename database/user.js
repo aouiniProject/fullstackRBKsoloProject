@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const url = `mongodb://localhost:27017/amin`;
 
 const { Schema } = mongoose;
 
@@ -17,29 +16,39 @@ const UserSchema = new Schema({
 
 const User = mongoose.model('Users', UserSchema);
 
-const insertUser = (data, cb) => {
+const insertUser = (input, cb) => {
 
     // bcrypt.genSalt(10, function (err, salt) {
-    //     bcrypt.hash(data.password, salt, function (err, hash) {
-    //         data.password = hash;
+    //     bcrypt.hash(input.password, salt, function (err, hash) {
+    console.log(input);
+
     //     });
-    var user = new User(data)
+    var user = new User(input)
 
     user.save()
-        .catch(err => console.log('this is a nono !!! : ' + err))
+        .catch(err => console.log('this is a nono!!! UP: ' + err))
 
 }
 
+const findUser = (input, res) => {
 
+    User.findOne({ email: input.email }, (err, user) => {
+        if (err) {
+            console.log('this is a nono!!! IN: ' + err)
+            return res.status(505).send('there is problem with the server')
+        }
+        if (!user) {
+            return res.status(404).send('user does not exist')
+        }
+        if (user.email === input.email && user.password === input.password) {
 
-const findUser = (name, email, cb) => {
-    User.findOne({ name: name, email: email }, cb);
+            res.status(200).send(user.name)
+        }
+
+    });
+
 };
-
-
-
-
-
+// , email: email
 exports.User = User;
 exports.insertUser = insertUser;
 exports.findUser = findUser;
