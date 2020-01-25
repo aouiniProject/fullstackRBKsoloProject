@@ -1,8 +1,4 @@
 # fullstackRBKsoloProject
 
 TECHNOLOGIES USED :
-react 
-nodejs | backend
-express | libarie
-socket io | tool 
-mongodb | DB
+react / nodejs / mongodb / express / socket io
